@@ -23,7 +23,6 @@ export default {
         this.pageNumber-= 1;
       if(buttonAction == 'next')
         this.pageNumber+= 1;
-      console.log("inside pagination", url);
       this.$parent.getData(url);
     },
   },

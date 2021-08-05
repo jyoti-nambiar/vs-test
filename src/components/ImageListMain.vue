@@ -1,8 +1,9 @@
 <template>
   <div class="container">
+    <input type="text" v-model="search" placeholder="Search using Author Name..." />
     <div class="row">
       <div class="column">
-        <div class="card" v-for="pic in picdetails" :key="pic.id">
+        <div class="card" v-for="pic in filteredPicDetails" :key="pic.id">
           <img
             v-bind:src="'https://picsum.photos/id/' + pic.id + '/367/267'"
             alt="picsum-photos"
@@ -17,13 +18,11 @@
       </div>
       <Modal
         v-bind:picdetails="selectedPic"
-        v-show="isModalVisible" 
+        v-show="isModalVisible"
         @close="closeModal"
       />
     </div>
-    <Pagination v-bind:prevUrl="prevUrl"
-    v-bind:nextUrl="nextUrl"
-    />
+    <Pagination v-bind:prevUrl="prevUrl" v-bind:nextUrl="nextUrl" />
   </div>
 </template>
 
@@ -31,44 +30,48 @@
 import axios from "axios";
 import parse from "parse-link-header";
 import Modal from "./Modal.vue";
-import Pagination from './Pagination.vue';
-
+import Pagination from "./Pagination.vue";
 export default {
   name: "ImageListMain",
 
   components: {
     Modal,
-    Pagination
-   
+    Pagination,
   },
 
   data() {
     return {
       isModalVisible: false,
       baseUrl: "https://picsum.photos/v2/list",
-      nextUrl: '',
-      prevUrl: '',
+      nextUrl: "",
+      prevUrl: "",
       picdetails: [],
       selectedPic: [],
+      search: "",
     };
   },
   created() {
     this.getData(this.baseUrl);
   },
+  computed: {
+    filteredPicDetails: function() {
+      return this.picdetails.filter((pic) =>
+        pic.author.toLowerCase().includes(this.search.toLowerCase())
+      );
+    },
+  },
+
   methods: {
     getData: function(url) {
       axios.get(url).then((response) => {
         this.picdetails = response.data;
-        if(parse(response.headers.link).next != null){
-        this.nextUrl = parse(response.headers.link).next.url;
-        } else{
-        
-        this.nextUrl = '';
-        
+        if (parse(response.headers.link).next != null) {
+          this.nextUrl = parse(response.headers.link).next.url;
+        } else {
+          this.nextUrl = "";
         }
-        
-        if (parse(response.headers.link).prev != null){
-         this.prevUrl = parse(response.headers.link).prev.url;
+        if (parse(response.headers.link).prev != null) {
+          this.prevUrl = parse(response.headers.link).prev.url;
         }
       });
     },
