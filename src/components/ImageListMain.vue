@@ -48,6 +48,7 @@ export default {
       picdetails: [],
       selectedPic: [],
       search: "",
+      limit:100
     };
   },
   created() {
@@ -66,12 +67,12 @@ export default {
       axios.get(url).then((response) => {
         this.picdetails = response.data;
         if (parse(response.headers.link).next != null) {
-          this.nextUrl = parse(response.headers.link).next.url;
+          this.nextUrl = parse(response.headers.link).next.url.split('&')[0]+'&limit='+this.limit;
         } else {
           this.nextUrl = "";
         }
         if (parse(response.headers.link).prev != null) {
-          this.prevUrl = parse(response.headers.link).prev.url;
+          this.prevUrl = parse(response.headers.link).prev.url.next.url.split('&')[0]+'&limit='+this.limit;
         }
       });
     },
