@@ -71,7 +71,7 @@ export default {
           this.nextUrl = "";
         }
         if (parse(response.headers.link).prev != null) {
-          this.prevUrl = parse(response.headers.link).prev.url.split('&')[0]+'&limit'+this.limit;
+          this.prevUrl = parse(response.headers.link).prev.url.split('&')[0]+'&limit='+this.limit;
         }
       });
     },
