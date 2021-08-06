@@ -58,7 +58,8 @@ export default {
   flex-direction: column;
 }
 
-.modal-header{
+.modal-header,
+.modal-footer {
   padding: 15px;
   display: flex;
 }
@@ -88,6 +89,16 @@ export default {
   color: #4aae9b;
   background: transparent;
 }
+
+.btn-green {
+  color: white;
+  background: #4aae9b;
+  border: 1px solid #4aae9b;
+  border-radius: 2px;
+}
+
+
+
 
 
 </style>
