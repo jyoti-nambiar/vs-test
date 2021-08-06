@@ -1,8 +1,8 @@
 <template>
   <div class="pagination-div">
-    <button :disabled = "pageNumber <= 1" v-on:click="paginationFunction(prevUrl,'prev')">Prev</button>
+    <button class="button" :disabled = "pageNumber <= 1" v-on:click="paginationFunction(prevUrl,'prev')">Prev</button>
     <span>{{ pageNumber }}</span>
-    <button :disabled ="nextUrl.length == 0 && pageNumber>1" v-on:click="paginationFunction(nextUrl,'next')">Next</button>
+    <button class="button" :disabled ="nextUrl.length == 0 && pageNumber>1" v-on:click="paginationFunction(nextUrl,'next')">Next</button>
   </div>
 </template>
 
@@ -27,6 +27,9 @@ export default {
     },
   },
 };
+
+
+
 </script>
 
 <style scoped>
@@ -37,8 +40,8 @@ export default {
   margin-top: 15px;
 }
 
-button,
-span {
+.button,
+ span {
   margin: 10px;
   padding: 10px;
 }
